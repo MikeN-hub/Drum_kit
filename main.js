@@ -1,20 +1,29 @@
+let buttons = Array.from(document.querySelectorAll('.button'));
+let symbols = []
 
-let cells = []
-let buttons = document.querySelectorAll('.button');
+buttons.forEach(item=>{
+    symbols.push(item.dataset.symbol)
+})
+
 buttons.forEach(item =>{
-    item.firstChild.textContent = item.dataset.symbol.toUpperCase()
     item.lastChild.textContent = item.dataset.sound
-    cells.push(item.dataset.symbol)
 })
 
 document.addEventListener('keydown', e=>{
-    if(cells.includes(e.key)){
-        buttons.forEach(item=>{
+    buttons.forEach(item=>{
+        if(item.dataset.symbol == e.code){
+            item.classList.add('active')
+            sound(item.dataset.sound)
+        }
+    })
+})
+
+document.addEventListener('keyup', e=>{
+    buttons.forEach(item=>{
+        if(item.dataset.symbol == e.code){
             item.classList.remove('active')
-        })
-        buttons[cells.indexOf(e.key)].classList.add('active')
-        sound()
-}
+        }
+    })
 })
 
 function sound(typeOfSound){
